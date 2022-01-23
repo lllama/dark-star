@@ -1,0 +1,20 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "dark_star"
+authors = [{name = "Felix Ingram", email = "f.ingram@gmail.com"}]
+license = {file = "LICENSE"}
+classifiers = ["License :: OSI Approved :: Apache Software License"]
+dynamic = ["version", "description"]
+readme = "README.md"
+requires-python = ">=3.6"
+dependencies = [
+"starlette",
+"starlette-htmx",
+"jinja2"
+]
+
+[project.urls]
+Home = "https://github.com/lllama/dark-star"
