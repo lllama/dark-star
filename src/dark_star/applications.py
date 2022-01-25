@@ -1,5 +1,6 @@
 import typing
 
+from textwrap import indent
 from starlette.applications import Starlette
 from starlette.datastructures import State, URLPath
 from starlette.exceptions import ExceptionMiddleware
@@ -49,16 +50,13 @@ class DarkStar(Starlette):
         for path in Path(routes_path).rglob("*"):
             if path.is_file():
                 python, _, template = path.read_text().partition("----[DarkStar]----")
-                exec(
-                    compile(
-                        f"""def wot(request):
-    {python}
+                function_source = f"""def wot(request):
+{indent(python, '    ')}
     return Response('wowowowo')
-""",
-                        f"{path}",
-                        "exec",
-                    ),
-                    globals(),
-                )
+"""
+                exec(compile(function_source, f"{path}", "exec"), globals())
                 routes.append(Route(f"/{path.with_suffix('')}", wot))
         return routes
+
+
+app = DarkStar()
