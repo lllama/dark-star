@@ -95,7 +95,9 @@ class DarkStar(Starlette):
                 function_name = f"ds_{md5(str(path).encode()).hexdigest()}"
 
                 modded_function = ast.fix_missing_locations(
-                    FunctionAdder(path, function_name).visit(ast.parse(python))
+                    FunctionAdder(path.relative_to(routes_path), function_name).visit(
+                        ast.parse(python)
+                    )
                 )
 
                 exec(compile(modded_function, f"{path}", "exec"), globals())

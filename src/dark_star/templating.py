@@ -35,7 +35,7 @@ class FileSystemLoader(JinjaFileSystemLoader):
         pieces = split_template_path(template)
 
         for searchpath in self.searchpath:
-            filename = os.path.join(*pieces)
+            filename = os.path.join(searchpath, *pieces)
 
             f = open_if_exists(filename)
 
