@@ -18,9 +18,6 @@ else:  # pragma: nocover
     pass_context = jinja2.contextfunction
 
 
-DARK_STAR_SEPARATOR = '""" [DarkStar]'
-
-
 class TemplateExtractor(ast.NodeVisitor):
     """Makes our bare files into functions"""
 
