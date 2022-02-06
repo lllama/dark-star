@@ -15,12 +15,6 @@ from .templating import Jinja2Templates
 
 dark_star_templates = None
 
-function_template = """
-def {name}(request):
-{python_source}
-    return dark_star_templates.TemplateResponse("{template_path}", locals())
-"""
-
 
 class FunctionAdder(ast.NodeTransformer):
     """Makes our bare files into functions"""
@@ -58,7 +52,7 @@ class DarkStar(Starlette):
         self,
         routes_path: typing.Union[str, Path] = "routes",
         debug: bool = False,
-        routes: typing.Sequence[BaseRoute] = None,
+        routes: typing.Sequence[BaseRoute] = [],
         middleware: typing.Sequence[Middleware] = None,
         exception_handlers: typing.Mapping[
             typing.Any,
@@ -77,7 +71,7 @@ class DarkStar(Starlette):
         path_routes = self._collect_routes(routes_path)
         super().__init__(
             debug,
-            path_routes + routes if routes else path_routes,
+            path_routes + routes,
             middleware,
             exception_handlers,
             on_startup,
@@ -113,6 +107,3 @@ class DarkStar(Starlette):
                     )
                 )
         return routes
-
-
-app = DarkStar()
