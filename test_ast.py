@@ -1,4 +1,5 @@
 import ast
+
 from astpretty import pprint
 
 code1 = """
@@ -57,3 +58,13 @@ return dark_star_templates.TemplateResponse("{template_path}", locals())
 """
     )
 )
+code = '''
+print('')
+"""adfa
+fadf
+a
+fadf
+ad
+"""
+'''
+pprint(ast.parse(code))

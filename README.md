@@ -19,4 +19,3 @@ creating web apps. In particular, it looks to reduce the need of having a
 separate files for view functions and templates. It tries to embrace Locality
 of Behaviour by putting the view function code and template in the same file,
 and having the file's path be the route used by Starlette to access the code.
-

@@ -1,0 +1,47 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+exclude: |
+    (?x)(
+        copier|
+        .vim
+    )
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+    -   id: check-merge-conflict
+-   repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.9.0  # Use the ref you want to point at
+    hooks:
+    -   id: python-use-type-annotations
+    -   id: python-check-blanket-noqa
+    -   id: python-no-eval
+    -   id: python-no-log-warn
+-   repo: https://github.com/psf/black
+    rev: 21.7b0
+    hooks:
+    -   id: black
+-   repo: https://github.com/PyCQA/flake8
+    rev: 3.9.2
+    hooks:
+    -   id: flake8
+        args: ["--ignore=E1,W"]
+-   repo: https://github.com/sqlalchemyorg/zimports/
+    rev: v0.4.0
+    hooks:
+    -   id: zimports
+
+-   repo: https://github.com/ikamensh/flynt
+    rev: '0.63'
+    hooks:
+    -   id: flynt
+        args: ["--verbose"]
+
+-   repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+    rev: v1.2.2
+    hooks:
+    -   id: python-safety-dependencies-check

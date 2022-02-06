@@ -1,21 +1,16 @@
 import ast
-import typing
 from hashlib import md5
-from textwrap import indent
+from pathlib import Path
+import typing
+
 from starlette.applications import Starlette
-from starlette.datastructures import State, URLPath
-from starlette.exceptions import ExceptionMiddleware
 from starlette.middleware import Middleware
-from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.middleware.errors import ServerErrorMiddleware
 from starlette.requests import Request
 from starlette.responses import Response
-from starlette.routing import BaseRoute, Router, Route, compile_path
-from starlette.types import ASGIApp, Receive, Scope, Send
-from pathlib import Path
-import jinja2
+from starlette.routing import BaseRoute
+from starlette.routing import Route
 
-from .templating import Jinja2Templates, DARK_STAR_SEPARATOR
+from .templating import Jinja2Templates
 
 
 dark_star_templates = None
@@ -38,34 +33,24 @@ class FunctionAdder(ast.NodeTransformer):
             f"""return dark_star_templates.TemplateResponse("{self.template_path}", locals())"""
         )
 
-    def visit_Return(self, node):
-        new_return = ast.parse(
-            f"""return dark_star_templates.TemplateResponse("{self.template_path}", locals())"""
-        )
-
     def visit_Module(self, node):
         super().generic_visit(node)
 
-        if isinstance(node, ast.Module):
-            wrapper = ast.AsyncFunctionDef(
-                name=self.function_name,
-                decorator_list=[],
-                args=ast.arguments(
-                    posonlyargs=[],
-                    kwonlyargs=[],
-                    defaults=[],
-                    kw_defaults=[],
-                    args=[ast.arg(arg="request")],
-                ),
-            )
-            wrapper.body = node.body
-            wrapper.body.extend(self.new_return.body)
-            node.body = [wrapper]
-            return node
-        if not isinstance(node, ast.Constant) or not isinstance(node.value, int):
-            return node
-
-        return ast.Constant(value=42)
+        wrapper = ast.AsyncFunctionDef(
+            name=self.function_name,
+            decorator_list=[],
+            args=ast.arguments(
+                posonlyargs=[],
+                kwonlyargs=[],
+                defaults=[],
+                kw_defaults=[],
+                args=[ast.arg(arg="request")],
+            ),
+        )
+        wrapper.body = node.body
+        wrapper.body.extend(self.new_return.body)
+        node.body = [wrapper]
+        return node
 
 
 class DarkStar(Starlette):
@@ -101,23 +86,31 @@ class DarkStar(Starlette):
 
     def _collect_routes(self, routes_path) -> typing.Sequence[BaseRoute]:
         routes = []
+
+        async def index_route(request):
+            return dark_star_templates.TemplateResponse(
+                "routes/index.html", {"request": request}
+            )
+
         for path in Path(routes_path).rglob("*"):
             if path == Path(routes_path) / "index.html":
+                routes.append(Route("/", index_route))
                 continue
             if path.is_file():
-                python, *_ = path.read_text().partition(DARK_STAR_SEPARATOR)
+                python = path.read_text()
                 function_name = f"ds_{md5(str(path).encode()).hexdigest()}"
 
                 modded_function = ast.fix_missing_locations(
                     FunctionAdder(path, function_name).visit(ast.parse(python))
                 )
 
-                print(ast.unparse(modded_function))
-
                 exec(compile(modded_function, f"{path}", "exec"), globals())
 
                 routes.append(
-                    Route(f"/{path.with_suffix('')}", globals()[function_name])
+                    Route(
+                        f"/{path.relative_to(routes_path).with_suffix('')}",
+                        globals()[function_name],
+                    )
                 )
         return routes
 
