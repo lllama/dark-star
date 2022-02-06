@@ -1,3 +1,4 @@
+import ast
 import typing
 from hashlib import md5
 from textwrap import indent
@@ -24,6 +25,47 @@ def {name}(request):
 {python_source}
     return dark_star_templates.TemplateResponse("{template_path}", locals())
 """
+
+
+class FunctionAdder(ast.NodeTransformer):
+    """Makes our bare files into functions"""
+
+    def __init__(self, template_path, function_name, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.function_name = function_name
+        self.template_path = template_path
+        self.new_return = ast.parse(
+            f"""return dark_star_templates.TemplateResponse("{self.template_path}", locals())"""
+        )
+
+    def visit_Return(self, node):
+        new_return = ast.parse(
+            f"""return dark_star_templates.TemplateResponse("{self.template_path}", locals())"""
+        )
+
+    def visit_Module(self, node):
+        super().generic_visit(node)
+
+        if isinstance(node, ast.Module):
+            wrapper = ast.AsyncFunctionDef(
+                name=self.function_name,
+                decorator_list=[],
+                args=ast.arguments(
+                    posonlyargs=[],
+                    kwonlyargs=[],
+                    defaults=[],
+                    kw_defaults=[],
+                    args=[ast.arg(arg="request")],
+                ),
+            )
+            wrapper.body = node.body
+            wrapper.body.extend(self.new_return.body)
+            node.body = [wrapper]
+            return node
+        if not isinstance(node, ast.Constant) or not isinstance(node.value, int):
+            return node
+
+        return ast.Constant(value=42)
 
 
 class DarkStar(Starlette):
@@ -64,16 +106,16 @@ class DarkStar(Starlette):
                 continue
             if path.is_file():
                 python, *_ = path.read_text().partition(DARK_STAR_SEPARATOR)
-                path_regex, path_format, param_convertors = compile_path(f"{path}")
                 function_name = f"ds_{md5(str(path).encode()).hexdigest()}"
-                function_source = function_template.format(
-                    name=function_name,
-                    python_source=indent(python, "    "),
-                    params=",".join(param_convertors.keys()),
-                    template_path=str(path.relative_to(routes_path)),
+
+                modded_function = ast.fix_missing_locations(
+                    FunctionAdder(path, function_name).visit(ast.parse(python))
                 )
-                print(function_source)
-                exec(compile(function_source, f"{path}", "exec"), globals())
+
+                print(ast.unparse(modded_function))
+
+                exec(compile(modded_function, f"{path}", "exec"), globals())
+
                 routes.append(
                     Route(f"/{path.with_suffix('')}", globals()[function_name])
                 )

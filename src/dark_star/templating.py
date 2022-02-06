@@ -56,7 +56,7 @@ class FileSystemLoader(JinjaFileSystemLoader):
         pieces = split_template_path(template)
         for searchpath in self.searchpath:
             filename = os.path.join(searchpath, *pieces)
-            print(filename)
+            print(f"Searching for {filename}")
             f = open_if_exists(filename)
             if f is None:
                 continue
@@ -65,14 +65,16 @@ class FileSystemLoader(JinjaFileSystemLoader):
             finally:
                 f.close()
 
+            print("Found it!!")
+
             if not Path(filename) == Path(searchpath) / "index.html":
                 template_parent = get_parent_template(filename, searchpath)
 
                 *_, contents = contents.partition(DARK_STAR_SEPARATOR)
-                contents = TEMPLATE_TEMPLATE.format(
-                    template=contents, template_parent=template_parent
-                )
-                print(contents)
+                # contents = TEMPLATE_TEMPLATE.format(
+                #     template=contents, template_parent=template_parent
+                # )
+                # print(contents)
 
             mtime = os.path.getmtime(filename)
 
@@ -85,13 +87,13 @@ class FileSystemLoader(JinjaFileSystemLoader):
             return contents, filename, uptodate
 
         template_parent = get_parent_template(template, "")
-        print(template_parent)
+        print(f"Parent: {template_parent}")
 
-        contents = TEMPLATE_TEMPLATE.format(
-            template="", template_parent=template_parent
-        )
-        print(contents)
-        return contents, template, lambda: True
+        # contents = TEMPLATE_TEMPLATE.format(
+        #     template="", template_parent=template_parent
+        # )
+        # print(contents)
+        # return contents, template, lambda: True
 
 
 class Jinja2Templates(StarletteJinja2Templates):
