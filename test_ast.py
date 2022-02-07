@@ -1,6 +1,11 @@
+from shlex import split
+
 import ast
 
 from astpretty import pprint
+from tokenize import tokenize, COMMENT
+
+from io import BytesIO
 
 code1 = """
 print(2)
@@ -39,7 +44,7 @@ class NumberChanger(ast.NodeTransformer):
         return ast.Constant(value=42)
 
 
-pprint(ast.parse(code1))
+# pprint(ast.parse(code1))
 # pprint(ast.parse(code2))
 # pprint(a)
 modded1 = ast.fix_missing_locations(NumberChanger().visit(ast.parse(code1)))
@@ -48,23 +53,42 @@ modded2 = ast.parse(code2)
 # pprint(modded2)
 # print(modded1 == modded2)
 # print("--------------")
-print(ast.unparse(modded1))
-print(ast.unparse(modded2))
+# print(ast.unparse(modded1))
+# print(ast.unparse(modded2))
 
-pprint(
-    ast.parse(
-        """
-return dark_star_templates.TemplateResponse("{template_path}", locals())
+# pprint(
+#     ast.parse(
+#         """
+# return dark_star_templates.TemplateResponse("{template_path}", locals())
+# """
+#     )
+# )
+# code = '''
+# print('')
+# """adfa
+# fadf
+# a
+# fadf
+# ad
+# """
+# '''
+# pprint(ast.parse(code))
+
+code = """
+
+
+# methods="GET, POST" name="this is my name"
+
+
+r = request
 """
-    )
-)
-code = '''
-print('')
-"""adfa
-fadf
-a
-fadf
-ad
-"""
-'''
+g = tokenize(BytesIO(code.strip().encode("utf-8")).readline)
+
+
+for toknum, tokval, (srow, scol), *_ in g:
+    if toknum == COMMENT:
+        print(tokval, srow)
+        for s in split(tokval):
+            print(s)
+
 pprint(ast.parse(code))

@@ -1,6 +1,9 @@
 import ast
 from hashlib import md5
 from pathlib import Path
+from tokenize import tokenize, COMMENT
+from io import BytesIO
+import shlex
 import typing
 
 from starlette.applications import Starlette
@@ -45,6 +48,25 @@ class FunctionAdder(ast.NodeTransformer):
         wrapper.body.extend(self.new_return.body)
         node.body = [wrapper]
         return node
+
+
+def get_options(code):
+    tokens = tokenize(BytesIO(code.strip().encode("utf-8")).readline)
+    for toknum, tokval, (srow, scol), *_ in tokens:
+        if srow > 1:
+            return {}
+        if toknum == COMMENT:
+            _, *options = shlex.split(tokval)
+            break
+    route_options = {}
+    if options:
+        for option in options:
+            key, _, value = option.partition("=")
+            if key == "methods":
+                route_options[key] = [x.strip() for x in value.split(",")]
+            elif key == "name":
+                route_options[key] = value
+    return route_options
 
 
 class DarkStar(Starlette):
@@ -102,10 +124,13 @@ class DarkStar(Starlette):
 
                 exec(compile(modded_function, f"{path}", "exec"), globals())
 
+                route_options = get_options(python)
+
                 routes.append(
                     Route(
                         f"/{path.relative_to(routes_path).with_suffix('')}/",
                         globals()[function_name],
+                        **route_options,
                     )
                 )
         return routes
