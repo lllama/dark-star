@@ -8,10 +8,10 @@
     
     
     
-    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel="shortcut icon" href="../img/favicon.ico">
 
     
-    <title>Dark Star - Dark Star</title>
+    <title>Working with htmx - Dark Star</title>
     
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
@@ -19,9 +19,9 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
     <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
-    <link href="css/bootstrap-custom.min.css" rel="stylesheet">
-    <link href="css/base.min.css" rel="stylesheet">
-    <link href="css/cinder.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="../css/base.min.css" rel="stylesheet">
+    <link href="../css/cinder.min.css" rel="stylesheet">
 
     
         
@@ -40,7 +40,7 @@
      
 </head>
 
-<body class="homepage" >
+<body>
 
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
@@ -59,7 +59,7 @@
             <!-- Main title -->
 
             
-              <a class="navbar-brand" href=".">Dark Star</a>
+              <a class="navbar-brand" href="..">Dark Star</a>
             
         </div>
 
@@ -69,14 +69,14 @@
                 <ul class="nav navbar-nav">
                 
                 
-                    <li class="active">
-                        <a href=".">Dark Star</a>
+                    <li >
+                        <a href="..">Dark Star</a>
                     </li>
                 
                 
                 
                     <li >
-                        <a href="routes/">Routes</a>
+                        <a href="../routes/">Routes</a>
                     </li>
                 
                 
@@ -86,16 +86,6 @@
                     <li>
                         <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
                             <i class="fas fa-search"></i> Search
-                        </a>
-                    </li>
-                    <li class="disabled">
-                        <a rel="prev" >
-                            <i class="fas fa-arrow-left"></i> Previous
-                        </a>
-                    </li>
-                    <li >
-                        <a rel="next" href="routes/">
-                            Next <i class="fas fa-arrow-right"></i>
                         </a>
                     </li>
             </ul>
@@ -108,67 +98,30 @@
         
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="first-level active"><a href="#dark-star">Dark Star</a></li>
-            <li class="second-level"><a href="#installation">Installation</a></li>
-                
-            <li class="second-level"><a href="#example-project-layout">Example Project layout</a></li>
-                
+        <li class="first-level active"><a href="#working-with-htmx">Working with htmx</a></li>
             <li class="second-level"><a href="#example-template-file">Example Template File</a></li>
                 
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="dark-star">Dark Star</h1>
-<p>Dark Star is a simple web framework built on top of Starlette that prioritises
-server-side rendering with templates.</p>
-<p>The vast majority of functionality is delegated to Starlette - Dark Star helps
-you organise your code and keeps your code next to your templates.</p>
-<h2 id="installation">Installation</h2>
-<p>Install with <code>pip</code>:</p>
-<pre><code>pip install dark-star
-</code></pre>
-<h2 id="example-project-layout">Example Project layout</h2>
-<pre><code>my_app.py            # The main application file
-routes/
-    index.html       # The root template - inherited by other templates
-    users.py         # A template file that maps to the /users/ url
-    users/
-        {profile}.py # A template that maps to the /user/{profile}/ url 
-                     # and lets the code access the value of `profile`
-</code></pre>
+<h1 id="working-with-htmx">Working with htmx</h1>
+<p>Dark Star includes functionality to make working with
+<a href="https://htmx.org">htmx</a> easier. In particular, it includes a piece of
+middleware to allow access to the <code>request.state.htmx</code> variable, which can be
+used in functions and templates to test whether a request came from htmx.</p>
 <h2 id="example-template-file">Example Template File</h2>
-<p>The following example shows how code and templates live together:</p>
+<p>In the following example, the template will only extend <code>index.html</code> if the
+request is not from htmx.</p>
 <pre><code>profile = request.path_params.get("profile")
 
 """
-{% extends 'index.html' %}
-Hello {profile} - here are your account details
+{% if request.state.htmx %}{% extends 'index.html' %}{% endif %}
+Hello {{profile}} - here are your account details
 
 ...
 """
-</code></pre>
-<p>All templates get passed the <code>request</code> parameter as per Starlette's normal
-routes. The template is then included as a triple-quoted string at the end of
-the file. All variables defined in the code will be available in the template
-for use when rendering.</p>
-<p>Another example:</p>
-<pre><code>users = Users.objects.all()
-
-"""
-{% extends 'index.html' %}
-&lt;ul&gt;
-{% for user in users %}
-    &lt;li&gt;{{user}}&lt;/li&gt;
-{% endfor %}
-&lt;/ul&gt;
-"""
-</code></pre>
-<p>Here the view function uses a <code>Users</code> object from an ORM to fetch a list of
-users from the database. These are then listed in the template. The <code>Users</code>
-object can be imported locally in the function, or in the <code>my_app.py</code> file at
-the root of the project. Anything imported in the <code>my_app</code> file is made
-available to all view functions.</p></div>
+</code></pre></div>
         
         
     </div>
@@ -188,7 +141,7 @@ available to all view functions.</p></div>
       </footer>
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/bootstrap-3.0.3.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
 
     
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
@@ -196,10 +149,10 @@ available to all view functions.</p></div>
     <script>hljs.initHighlightingOnLoad();</script>
     
 
-    <script>var base_url = "."</script>
+    <script>var base_url = ".."</script>
     
-    <script src="js/base.js"></script>
-    <script src="search/main.js"></script>
+    <script src="../js/base.js"></script>
+    <script src="../search/main.js"></script>
 
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -270,8 +223,3 @@ available to all view functions.</p></div>
     </body>
 
 </html>
-
-<!--
-MkDocs version : 1.2.3
-Build Date UTC : 2022-02-07 15:44:47.973672+00:00
--->
