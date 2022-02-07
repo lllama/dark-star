@@ -1,3 +1,34 @@
 # Dark Star CLI
 
-Dark Star comes with a CLI that helps you perform 
+Dark Star comes with a CLI that helps you perform basic tasks. 
+
+Run it using the command `darkstar`.
+
+```sh
+$ darkstar 
+Usage: cli [OPTIONS] COMMAND [ARGS]...
+
+  Dark Star - a web framework based on Starlette
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  create-app
+  new-route
+```
+
+## `create-app`
+
+`create-app` takes a directory where a new app and directory structure will be
+created.
+
+```sh
+$ darkstar create-app --help
+Usage: cli create-app [OPTIONS] DIRECTORY
+```
+
+## `new-route`
+
+`new-route` takes a route path and creates the python file in the correct
+location.
