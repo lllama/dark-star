@@ -18,4 +18,5 @@ def new_route():
     print("Adding new route")
 
 
-cli(prog_name="cli")
+def main():
+    cli(prog_name="cli")
