@@ -8,8 +8,8 @@ you organise your code and keeps your code next to your templates.
 
 
 Dark Star also includes functionality to make working with
-(htmx)[https://htmx.org] easier. In particular, it includes a piece of
-middleware to allow access to the `reuest.state.htmx` variable, which can be
+[htmx](https://htmx.org) easier. In particular, it includes a piece of
+middleware to allow access to the `request.state.htmx` variable, which can be
 used in functions and templates to test whether a request came from htmx.
 
 ## Example Project layout
