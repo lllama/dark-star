@@ -31,4 +31,5 @@ Usage: cli create-app [OPTIONS] DIRECTORY
 ## `new-route`
 
 `new-route` takes a route path and creates the python file in the correct
-location.
+location. It will also parse any path parameters and add code to extract them
+from the request.
