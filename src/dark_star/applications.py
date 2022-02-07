@@ -83,7 +83,7 @@ class DarkStar(Starlette):
 
         async def index_route(request):
             return dark_star_templates.TemplateResponse(
-                "routes/index.html", {"request": request}
+                "index.html", {"request": request}
             )
 
         for path in Path(routes_path).rglob("*"):
@@ -104,7 +104,7 @@ class DarkStar(Starlette):
 
                 routes.append(
                     Route(
-                        f"/{path.relative_to(routes_path).with_suffix('')}",
+                        f"/{path.relative_to(routes_path).with_suffix('')}/",
                         globals()[function_name],
                     )
                 )
