@@ -121,12 +121,38 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="first-level active"><a href="#dark-star-cli">Dark Star CLI</a></li>
+            <li class="second-level"><a href="#create-app">create-app</a></li>
+                
+            <li class="second-level"><a href="#new-route">new-route</a></li>
+                
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
 <h1 id="dark-star-cli">Dark Star CLI</h1>
-<p>Dark Star comes with a CLI that helps you perform </p></div>
+<p>Dark Star comes with a CLI that helps you perform basic tasks. </p>
+<p>Run it using the command <code>darkstar</code>.</p>
+<pre><code class="language-sh">$ darkstar 
+Usage: cli [OPTIONS] COMMAND [ARGS]...
+
+  Dark Star - a web framework based on Starlette
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  create-app
+  new-route
+</code></pre>
+<h2 id="create-app"><code>create-app</code></h2>
+<p><code>create-app</code> takes a directory where a new app and directory structure will be
+created.</p>
+<pre><code class="language-sh">$ darkstar create-app --help
+Usage: cli create-app [OPTIONS] DIRECTORY
+</code></pre>
+<h2 id="new-route"><code>new-route</code></h2>
+<p><code>new-route</code> takes a route path and creates the python file in the correct
+location.</p></div>
         
         
     </div>
