@@ -6,11 +6,12 @@ server-side rendering with templates.
 The vast majority of functionality is delegated to Starlette - Dark Star helps
 you organise your code and keeps your code next to your templates.
 
+## Installation
 
-Dark Star also includes functionality to make working with
-[htmx](https://htmx.org) easier. In particular, it includes a piece of
-middleware to allow access to the `request.state.htmx` variable, which can be
-used in functions and templates to test whether a request came from htmx.
+Install with `pip`:
+
+    pip install dark-star
+
 
 ## Example Project layout
 
@@ -25,14 +26,17 @@ used in functions and templates to test whether a request came from htmx.
 
 The following example shows how code and templates live together:
 
-    profile = request.path_params.get("profile")
+```python
+profile = request.path_params.get("profile")
 
-    """
-    {% extends 'index.html' %}
-    Hello {profile} - here are your account details
+"""
+{% extends 'index.html' %}
+Hello {profile} - here are your account details
 
-    ...
-    """
+... other content
+
+"""
+```
 
 All templates get passed the `request` parameter as per Starlette's normal
 routes. The template is then included as a triple-quoted string at the end of
