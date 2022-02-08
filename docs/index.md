@@ -13,6 +13,15 @@ Install with `pip`:
     pip install dark-star
 
 
+Create a new app:
+
+```
+python -m darkstar create-app
+# or
+darkstar create-app
+```
+
+
 ## Starter Application
 
 Dark Star uses default values for its directories, so getting started is very
