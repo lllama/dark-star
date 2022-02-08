@@ -10,8 +10,9 @@ you organise your code and keeps your code next to your templates.
 
 Install with `pip`:
 
-    pip install dark-star
-
+```
+pip install darkstar
+```
 
 Create a new app:
 
@@ -25,7 +26,8 @@ darkstar create-app
 ## Starter Application
 
 Dark Star uses default values for its directories, so getting started is very
-easy. Create an `app.py` file with the following content:
+easy. If you didn't use the CLI's `create-app` command then create an `app.py`
+file with the following content:
 
 ```python
 from darkstar.applications import DarkStar
@@ -38,7 +40,7 @@ files are in the `static` directory.
 
 You can then run your application using an ASGI server, such as uvircorn:
 
-```
+```python
 pip install uvicorn[standard] # if not already installed
 uvicorn app:app
 ```
@@ -46,14 +48,16 @@ uvicorn app:app
 
 ## Example Project layout
 
-    my_app.py            # The main application file
-    static/              # Static files under /static/
-    routes/
-        index.html       # The root template - inherited by other templates
-        users.py         # A template file that maps to the /users/ url
-        users/
-            {profile}.py # A template that maps to the /user/{profile}/ url 
-                         # and lets the code access the value of `profile`
+```python
+my_app.py            # The main application file
+static/              # Static files under /static/
+routes/
+    index.html       # The root template - inherited by other templates
+    users.py         # A template file that maps to the /users/ url
+    users/
+        {profile}.py # A template that maps to the /user/{profile}/ url 
+                     # and lets the code access the value of `profile`
+```
 ## Example Template File
 
 Template files are regular python files which contain the template at the end as a triple-quoted string.

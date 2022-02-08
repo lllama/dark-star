@@ -34,3 +34,36 @@ For example:
     """
 
 The `user` variable is passed into the template and can be used as shown.
+
+## Route methods and name
+
+If you want to specify methods for a route rather than the default `GET`, then
+you can use a special comment at the top of the file.
+
+The following example shows a route that accepts both `GET` and `POST` requests:
+
+```python
+# methods="GET, POST"
+if request.method == "POST":
+    .... # process POST request
+elif request.method == "GET":
+    .... # process GET request
+```
+
+The methods need to be specified as a comma-separated list in a double-quoted string.
+
+Similarly, the route's name can be specified in the same comment using the
+`name=<name>` syntax. The following example shows a method named
+`registration-form` that accepts `GET` and `POST` requests:
+
+```python
+# methods="GET, POST" name="registration-form"
+if request.method == "POST":
+    .... # process POST request
+elif request.method == "GET":
+    .... # process GET request
+```
+
+The `name` parameter is used when you want to obtain the url for a route using
+the `url_for` helper. See the [Starlette docs](https://www.starlette.io/routing/#reverse-url-lookups)
+for more information.
