@@ -11,6 +11,7 @@ from starlette.middleware import Middleware
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.routing import BaseRoute
+from starlette.routing import Mount
 from starlette.routing import Route
 from starlette.staticfiles import StaticFiles
 
@@ -94,8 +95,10 @@ class DarkStar(Starlette):
 
         path_routes = self._collect_routes(routes_path)
 
-        if not any(type(route.endpoint) == StaticFiles for route in routes):
-            routes.append(Route("/static/", StaticFiles(directory=static_directory)))
+        if not any(
+            type(route) == Mount and type(route.app) == StaticFiles for route in routes
+        ):
+            routes.append(Mount("/static/", StaticFiles(directory=static_directory)))
 
         super().__init__(
             debug,
