@@ -3,7 +3,6 @@ theme:
   name: cinder
   colorscheme: dracula
 nav:
-  - 'index.md'
   - 'routes.md'
   - CLI: 'cli.md'
   - htmx: 'htmx.md'
