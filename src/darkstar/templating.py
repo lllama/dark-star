@@ -47,7 +47,7 @@ class FileSystemLoader(JinjaFileSystemLoader):
             finally:
                 f.close()
 
-            if Path(filename).suffix != ".html":
+            if Path(filename).suffix == ".py":
                 extractor = TemplateExtractor()
                 extractor.visit(ast.parse(contents))
                 contents = extractor.value
