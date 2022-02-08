@@ -146,7 +146,13 @@ Commands:
 created.</p>
 <pre><code class="language-sh">$ darkstar create-app --help
 Usage: cli create-app [OPTIONS] DIRECTORY
+
+Options:
+  --htmx / --no-htmx  Include htmx script in index.html
+  --help              Show this message and exit.
 </code></pre>
+<p>The <code>--htmx</code> option will include <code>script</code> tags for htmx and hyperscript in the
+default <code>index.html</code> file.</p>
 <h2 id="new-route"><code>new-route</code></h2>
 <p><code>new-route</code> takes a route path and creates the python file in the correct
 location. It will also parse any path parameters and add code to extract them
