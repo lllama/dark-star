@@ -69,6 +69,8 @@ def new_route(path):
 {param_text}
 """
 {{% extends 'index.html' %}}
+{% block content %}
+{% endblock %}
 """
 '''
         )
@@ -76,3 +78,7 @@ def new_route(path):
 
 def main():
     cli(prog_name="cli")
+
+
+if __name__ == "__main__":
+    main()
