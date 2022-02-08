@@ -10,7 +10,7 @@ backend code and template are contained in the first page.
 
 Dark Star aims to provide an easy way to create web applications using the
 [HATEOAS](https://htmx.org/essays/hateoas/) and
-[HADS](https://htmx.org/essays/hypermedia-driven-applications/) philosophies
+[HDA](https://htmx.org/essays/hypermedia-driven-applications/) philosophies
 favoured by [htmx](https://htmx.org). It also aims to reduce the boilerplate
 code normally needed when creating web apps. In particular, it looks to reduce
 the need of having a separate files for view functions and templates. It tries
