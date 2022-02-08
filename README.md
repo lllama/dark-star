@@ -1,6 +1,12 @@
 # Dark Star
 
-Dark Star is a web framework that combines [Starlette](https://starlette.io) and [htmx](https://htmx.org).
+Dark Star is a web framework that provides filesystem routing for
+[Starlette](https://starlette.io) and first-class support for server-side rendering.
+
+Dark Star routes are defined by their filesystem path and both the route's
+backend code and template are contained in the first page.
+
+
 
 ## Motivation
 
