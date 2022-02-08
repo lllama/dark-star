@@ -13,9 +13,32 @@ Install with `pip`:
     pip install dark-star
 
 
+## Starter Application
+
+Dark Star uses default values for its directories, so getting started is very
+easy. Create an `app.py` file with the following content:
+
+```python
+from darkstar.applications import DarkStar
+
+app = DarkStar()
+```
+
+The above code will assume your routes are in the `routes` directory and static
+files are in the `static` directory.
+
+You can then run your application using an ASGI server, such as uvircorn:
+
+```
+pip install uvicorn[standard] # if not already installed
+uvicorn app:app
+```
+
+
 ## Example Project layout
 
     my_app.py            # The main application file
+    static/              # Static files under /static/
     routes/
         index.html       # The root template - inherited by other templates
         users.py         # A template file that maps to the /users/ url
@@ -24,7 +47,7 @@ Install with `pip`:
                          # and lets the code access the value of `profile`
 ## Example Template File
 
-The following example shows how code and templates live together:
+Template files are regular python files which contain the template at the end as a triple-quoted string.
 
 ```python
 profile = request.path_params.get("profile")
