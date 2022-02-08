@@ -149,7 +149,8 @@ darkstar create-app
 </code></pre>
 <h2 id="starter-application">Starter Application</h2>
 <p>Dark Star uses default values for its directories, so getting started is very
-easy. Create an <code>app.py</code> file with the following content:</p>
+easy. If you didn't use the CLI's <code>create-app</code> command then create an <code>app.py</code>
+file with the following content:</p>
 <pre><code class="language-python">from darkstar.applications import DarkStar
 
 app = DarkStar()
@@ -157,11 +158,11 @@ app = DarkStar()
 <p>The above code will assume your routes are in the <code>routes</code> directory and static
 files are in the <code>static</code> directory.</p>
 <p>You can then run your application using an ASGI server, such as uvircorn:</p>
-<pre><code>pip install uvicorn[standard] # if not already installed
+<pre><code class="language-python">pip install uvicorn[standard] # if not already installed
 uvicorn app:app
 </code></pre>
 <h2 id="example-project-layout">Example Project layout</h2>
-<pre><code>my_app.py            # The main application file
+<pre><code class="language-python">my_app.py            # The main application file
 static/              # Static files under /static/
 routes/
     index.html       # The root template - inherited by other templates
@@ -307,5 +308,5 @@ available to all view functions.</p></div>
 
 <!--
 MkDocs version : 1.2.3
-Build Date UTC : 2022-02-08 14:32:33.379028+00:00
+Build Date UTC : 2022-02-08 21:25:30.453682+00:00
 -->

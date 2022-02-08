@@ -123,6 +123,8 @@
         <li class="first-level active"><a href="#routes">Routes</a></li>
             <li class="second-level"><a href="#route-file-format">Route file format</a></li>
                 
+            <li class="second-level"><a href="#route-methods-and-name">Route methods and name</a></li>
+                
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -148,7 +150,30 @@
 Hello {{user}} - welcome to Dark Star
 """
 </code></pre>
-<p>The <code>user</code> variable is passed into the template and can be used as shown.</p></div>
+<p>The <code>user</code> variable is passed into the template and can be used as shown.</p>
+<h2 id="route-methods-and-name">Route methods and name</h2>
+<p>If you want to specify methods for a route rather than the default <code>GET</code>, then
+you can use a special comment at the top of the file.</p>
+<p>The following example shows a route that accepts both <code>GET</code> and <code>POST</code> requests:</p>
+<pre><code class="language-python"># methods=&quot;GET, POST&quot;
+if request.method == &quot;POST&quot;:
+    .... # process POST request
+elif request.method == &quot;GET&quot;:
+    .... # process GET request
+</code></pre>
+<p>The methods need to be specified as a comma-separated list in a double-quoted string.</p>
+<p>Similarly, the route's name can be specified in the same comment using the
+<code>name=&lt;name&gt;</code> syntax. The following example shows a method named
+<code>registration-form</code> that accepts <code>GET</code> and <code>POST</code> requests:</p>
+<pre><code class="language-python"># methods=&quot;GET, POST&quot; name=&quot;registration-form&quot;
+if request.method == &quot;POST&quot;:
+    .... # process POST request
+elif request.method == &quot;GET&quot;:
+    .... # process GET request
+</code></pre>
+<p>The <code>name</code> parameter is used when you want to obtain the url for a route using
+the <code>url_for</code> helper. See the <a href="https://www.starlette.io/routing/#reverse-url-lookups">Starlette docs</a>
+for more information.</p></div>
         
         
     </div>
