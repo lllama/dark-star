@@ -123,6 +123,8 @@
         <li class="first-level active"><a href="#dark-star">Dark Star</a></li>
             <li class="second-level"><a href="#installation">Installation</a></li>
                 
+            <li class="second-level"><a href="#starter-application">Starter Application</a></li>
+                
             <li class="second-level"><a href="#example-project-layout">Example Project layout</a></li>
                 
             <li class="second-level"><a href="#example-template-file">Example Template File</a></li>
@@ -140,8 +142,22 @@ you organise your code and keeps your code next to your templates.</p>
 <p>Install with <code>pip</code>:</p>
 <pre><code>pip install dark-star
 </code></pre>
+<h2 id="starter-application">Starter Application</h2>
+<p>Dark Star uses default values for its directories, so getting started is very
+easy. Create an <code>app.py</code> file with the following content:</p>
+<pre><code class="language-python">from darkstar.applications import DarkStar
+
+app = DarkStar()
+</code></pre>
+<p>The above code will assume your routes are in the <code>routes</code> directory and static
+files are in the <code>static</code> directory.</p>
+<p>You can then run your application using an ASGI server, such as uvircorn:</p>
+<pre><code>pip install uvicorn[standard] # if not already installed
+uvicorn app:app
+</code></pre>
 <h2 id="example-project-layout">Example Project layout</h2>
 <pre><code>my_app.py            # The main application file
+static/              # Static files under /static/
 routes/
     index.html       # The root template - inherited by other templates
     users.py         # A template file that maps to the /users/ url
@@ -286,5 +302,5 @@ available to all view functions.</p></div>
 
 <!--
 MkDocs version : 1.2.3
-Build Date UTC : 2022-02-07 22:35:13.737478+00:00
+Build Date UTC : 2022-02-08 11:17:49.594668+00:00
 -->
