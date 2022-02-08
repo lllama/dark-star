@@ -112,15 +112,7 @@ class DarkStar(Starlette):
     def _collect_routes(self, routes_path) -> typing.Sequence[BaseRoute]:
         routes = []
 
-        async def index_route(request):
-            return dark_star_templates.TemplateResponse(
-                "index.html", {"request": request}
-            )
-
         for path in Path(routes_path).rglob("*.py"):
-            if path == Path(routes_path) / "index.html":
-                routes.append(Route("/", index_route))
-                continue
             if path.is_file():
                 python = path.read_text()
                 function_name = f"ds_{md5(str(path).encode()).hexdigest()}"
@@ -142,4 +134,11 @@ class DarkStar(Starlette):
                         **route_options,
                     )
                 )
+
+        async def index_route(request):
+            return dark_star_templates.TemplateResponse(
+                "index.html", {"request": request}
+            )
+
+        routes.append(Route("/", index_route))
         return routes
