@@ -12,6 +12,7 @@ from starlette.requests import Request
 from starlette.responses import Response
 from starlette.routing import BaseRoute
 from starlette.routing import Route
+from starlette.staticfiles import StaticFiles
 
 from .templating import Jinja2Templates
 
@@ -75,6 +76,7 @@ class DarkStar(Starlette):
         routes_path: typing.Union[str, Path] = "routes",
         debug: bool = False,
         routes: typing.Sequence[BaseRoute] = [],
+        static_directory: str = "static",
         middleware: typing.Sequence[Middleware] = None,
         exception_handlers: typing.Mapping[
             typing.Any,
@@ -91,6 +93,11 @@ class DarkStar(Starlette):
         dark_star_templates = Jinja2Templates(routes_path)
 
         path_routes = self._collect_routes(routes_path)
+
+        if not any(type(route.endpoint) == StaticFiles for route in routes):
+            routes.append(Route("/static/", StaticFiles(directory=static_directory)))
+
+        print("\n".join(x.path for x in path_routes + routes))
         super().__init__(
             debug,
             path_routes + routes,

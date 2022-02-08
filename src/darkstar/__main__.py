@@ -14,9 +14,15 @@ def cli(ctx):
 @click.argument("directory", type=click.Path())
 def create_app(directory):
     path = Path(directory)
+
     routes_dir = path / "routes"
     print(f"Creating {routes_dir}")
     routes_dir.mkdir(exist_ok=True, parents=True)
+
+    static_dir = path / "static"
+    print(f"Creating {static_dir}")
+    static_dir.mkdir(exist_ok=True, parents=True)
+
     index_path = path / "routes" / "index.html"
     if not index_path.exists():
         print(f"Creating {index_path}")
