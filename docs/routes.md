@@ -6,7 +6,7 @@ The key feature that Dark Star offers is using the filesystem for routing. I.e. 
 ## Route file format
 
 
-Route files are simple python files. Any python code they contain will be wrapped into a view function and passed to Starlette.
+Route files are python files. Any python code they contain will be wrapped into a view function and passed to Starlette.
 
 For example, the following code:
 

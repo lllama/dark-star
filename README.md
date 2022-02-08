@@ -14,8 +14,7 @@ Dark Star aims to provide an easy way to create web applications using the
 favoured by [htmx](https://htmx.org). It also aims to reduce the boilerplate
 code normally needed when creating web apps. In particular, it looks to reduce
 the need of having a separate files for view functions and templates. It tries
-to embrace [Locality of
-Behaviour](https://htmx.org/essays/locality-of-behaviour/) by putting the view
-function code and template in the same file, and having the file's path be the
-route used by Starlette to access the code.
+to embrace [Locality of Behaviour](https://htmx.org/essays/locality-of-behaviour/)
+by putting the view function code and template in the same file, and having the
+file's path be the route used by Starlette to access the code.
 
