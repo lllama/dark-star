@@ -6,6 +6,7 @@ import typing
 
 import jinja2
 from jinja2.environment import Environment
+from jinja2.exceptions import TemplateNotFound
 from jinja2.loaders import FileSystemLoader as JinjaFileSystemLoader
 from jinja2.loaders import split_template_path
 from jinja2.utils import open_if_exists
@@ -46,7 +47,7 @@ class FileSystemLoader(JinjaFileSystemLoader):
             finally:
                 f.close()
 
-            if Path(filename) != Path(searchpath) / "index.html":
+            if Path(filename).suffix != ".html":
                 extractor = TemplateExtractor()
                 extractor.visit(ast.parse(contents))
                 contents = extractor.value
@@ -60,6 +61,7 @@ class FileSystemLoader(JinjaFileSystemLoader):
                     return False
 
             return contents, filename, uptodate
+        raise TemplateNotFound(template)
 
 
 class Jinja2Templates(StarletteJinja2Templates):

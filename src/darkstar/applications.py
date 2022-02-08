@@ -97,7 +97,6 @@ class DarkStar(Starlette):
         if not any(type(route.endpoint) == StaticFiles for route in routes):
             routes.append(Route("/static/", StaticFiles(directory=static_directory)))
 
-        print("\n".join(x.path for x in path_routes + routes))
         super().__init__(
             debug,
             path_routes + routes,
@@ -115,7 +114,7 @@ class DarkStar(Starlette):
                 "index.html", {"request": request}
             )
 
-        for path in Path(routes_path).rglob("*"):
+        for path in Path(routes_path).rglob("*.py"):
             if path == Path(routes_path) / "index.html":
                 routes.append(Route("/", index_route))
                 continue
