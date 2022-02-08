@@ -69,8 +69,8 @@ def new_route(path):
 {param_text}
 """
 {{% extends 'index.html' %}}
-{% block content %}
-{% endblock %}
+{{% block content %}}
+{{% endblock %}}
 """
 '''
         )
