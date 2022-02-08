@@ -1,4 +1,6 @@
 site_name: Dark Star
+repo_url: https://github.com/lllama/dark-star/
+edit_uri: ""
 theme:
   name: cinder
   colorscheme: dracula
