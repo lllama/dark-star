@@ -29,7 +29,7 @@ For example:
 
     user = request.path_params["user"]
     """
-    {% extends 'index.html' %}
+    {% extends 'index.py' %}
     Hello {{user}} - welcome to Dark Star
     """
 

@@ -127,18 +127,17 @@ class DarkStar(Starlette):
 
                 route_options = get_options(python)
 
-                routes.append(
-                    Route(
-                        f"/{path.relative_to(routes_path).with_suffix('')}/",
-                        globals()[function_name],
-                        **route_options,
+                if path.relative_to(routes_path) == Path("index.py"):
+                    if "name" not in route_options:
+                        route_options["name"] = "index"
+                    routes.append(Route("/", globals()[function_name], **route_options))
+                else:
+                    routes.append(
+                        Route(
+                            f"/{path.relative_to(routes_path).with_suffix('')}/",
+                            globals()[function_name],
+                            **route_options,
+                        )
                     )
-                )
 
-        async def index_route(request):
-            return dark_star_templates.TemplateResponse(
-                "index.html", {"request": request}
-            )
-
-        routes.append(Route("/", index_route))
         return routes

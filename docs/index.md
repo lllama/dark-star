@@ -52,7 +52,7 @@ uvicorn app:app
 my_app.py            # The main application file
 static/              # Static files under /static/
 routes/
-    index.html       # The root template - inherited by other templates
+    index.py         # The root template - inherited by other templates
     users.py         # A template file that maps to the /users/ url
     users/
         {profile}.py # A template that maps to the /user/{profile}/ url 
@@ -66,7 +66,7 @@ Template files are regular python files which contain the template at the end as
 profile = request.path_params.get("profile")
 
 """
-{% extends 'index.html' %}
+{% extends 'index.py' %}
 Hello {profile} - here are your account details
 
 ... other content
@@ -84,7 +84,7 @@ Another example:
     users = Users.objects.all()
 
     """
-    {% extends 'index.html' %}
+    {% extends 'index.py' %}
     <ul>
     {% for user in users %}
         <li>{{user}}</li>

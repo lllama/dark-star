@@ -9,7 +9,8 @@ from darkstar.applications import DarkStar
 app = DarkStar()
 """
 
-INDEX_TEMPLATE = """
+INDEX_TEMPLATE = '''
+"""
 <html data-theme="dark">
   <head>
     <title>Dark Star</title>
@@ -30,12 +31,13 @@ INDEX_TEMPLATE = """
   </body>
 </html>
 """
+'''
 
 TEMPLATE_TEMPLATE = '''\
 {{param_text}}
 """
 {% raw %}
-{% extends 'index.html' %}
+{% extends 'index.py' %}
 {% block content %}
 {% endblock %}
 {% endraw %}
@@ -52,9 +54,7 @@ def cli(ctx):
 
 @cli.command("create-app")
 @click.argument("directory", type=click.Path())
-@click.option(
-    "--htmx/--no-htmx", help="Include htmx script in index.html", default=False
-)
+@click.option("--htmx/--no-htmx", help="Include htmx script in index.py", default=False)
 def create_app(directory, htmx):
     path = Path(directory)
 
@@ -66,7 +66,7 @@ def create_app(directory, htmx):
     print(f"Creating {static_dir}")
     static_dir.mkdir(exist_ok=True, parents=True)
 
-    index_path = path / "routes" / "index.html"
+    index_path = path / "routes" / "index.py"
     if not index_path.exists():
         print(f"Creating {index_path}")
         index_path.write_text(Template(INDEX_TEMPLATE).render(htmx=htmx))
