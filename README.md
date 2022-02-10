@@ -17,3 +17,31 @@ the need of having a separate files for view functions and templates. It tries
 to embrace [Locality of Behaviour](https://htmx.org/essays/locality-of-behaviour/)
 by putting the view function code and template in the same file, and having the
 file's path be the route used by Starlette to access the code.
+
+## Installation
+
+```
+pip install darkstar
+```
+
+You can then run the included CLI with:
+
+```
+python -m darkstar create-app --help
+```
+
+To run your new app, you'll need an ASGI server installed, such a Hypercorn, Daphne, or Uvicorn.
+
+To run with Uvicorn, first install it:
+
+```
+python -m pip install uvicorn[standard]
+```
+
+The run your app:
+
+```
+python -m uvicorn app:app
+```
+
+(This assumes your defined your app as the `app` variable in an `app.py` file.)
