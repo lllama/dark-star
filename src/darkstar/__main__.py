@@ -1,7 +1,8 @@
-import click
 from pathlib import Path
-from starlette.routing import compile_path
+
+import click
 from jinja2 import Template
+from starlette.routing import compile_path
 
 APP_TEMPLATE = """\
 from darkstar.applications import DarkStar

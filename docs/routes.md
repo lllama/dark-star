@@ -22,7 +22,7 @@ Will get converted into the following function:
 
 The function's name is based off a hash of the file path, and so should be considered random to all intents and purposes.
 
-The return value is added to the end of all functions, so it is important that a template also be defined in the file. Templates are defined by adding a triple-quoted string to the end of the file. 
+The return value is added to the end of all functions, so it is important that a template also be defined in the file. Templates are defined by adding a triple-quoted string to the end of the file.
 
 For example:
 

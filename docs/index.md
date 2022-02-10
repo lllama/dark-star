@@ -55,7 +55,7 @@ routes/
     index.py         # The root template - inherited by other templates
     users.py         # A template file that maps to the /users/ url
     users/
-        {profile}.py # A template that maps to the /user/{profile}/ url 
+        {profile}.py # A template that maps to the /user/{profile}/ url
                      # and lets the code access the value of `profile`
 ```
 ## Example Template File

@@ -1,11 +1,10 @@
-from shlex import split
-
 import ast
+from io import BytesIO
+from shlex import split
+from tokenize import COMMENT
+from tokenize import tokenize
 
 from astpretty import pprint
-from tokenize import tokenize, COMMENT
-
-from io import BytesIO
 
 code1 = """
 print(2)

@@ -1,11 +1,11 @@
 # Dark Star CLI
 
-Dark Star comes with a CLI that helps you perform basic tasks. 
+Dark Star comes with a CLI that helps you perform basic tasks.
 
 Run it using the command `darkstar`.
 
 ```sh
-$ darkstar 
+$ darkstar
 Usage: cli [OPTIONS] COMMAND [ARGS]...
 
   Dark Star - a web framework based on Starlette

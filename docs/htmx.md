@@ -18,4 +18,3 @@ request is not from htmx.
 
     ...
     """
-

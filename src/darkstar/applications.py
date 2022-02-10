@@ -1,9 +1,10 @@
 import ast
 from hashlib import md5
-from pathlib import Path
-from tokenize import tokenize, COMMENT
 from io import BytesIO
+from pathlib import Path
 import shlex
+from tokenize import COMMENT
+from tokenize import tokenize
 import typing
 
 from starlette.applications import Starlette
