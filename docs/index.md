@@ -67,7 +67,7 @@ profile = request.path_params.get("profile")
 
 """
 {% extends 'index.py' %}
-Hello {profile} - here are your account details
+Hello {{profile}} - here are your account details
 
 ... other content
 
