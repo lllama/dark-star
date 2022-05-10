@@ -79,6 +79,7 @@ class DarkStar(Starlette):
         debug: bool = False,
         routes: typing.Sequence[BaseRoute] = [],
         static_directory: str = "static",
+        global_objects=[],
         middleware: typing.Sequence[Middleware] = None,
         exception_handlers: typing.Mapping[
             typing.Any,
@@ -90,6 +91,8 @@ class DarkStar(Starlette):
         on_shutdown: typing.Sequence[typing.Callable] = None,
         lifespan: typing.Callable[["Starlette"], typing.AsyncContextManager] = None,
     ) -> None:
+
+        self.global_objects = global_objects
 
         global dark_star_templates
         dark_star_templates = Jinja2Templates(routes_path)
@@ -124,19 +127,24 @@ class DarkStar(Starlette):
                     )
                 )
 
-                exec(compile(modded_function, f"{path}", "exec"), globals())
+                new_globals = {x.__name__: x for x in self.global_objects}
+
+                compiled_function = exec(
+                    compile(modded_function, f"{path}", "exec"),
+                    new_globals.update(globals()),
+                )
 
                 route_options = get_options(python)
 
                 if path.relative_to(routes_path) == Path("index.py"):
                     if "name" not in route_options:
                         route_options["name"] = "index"
-                    routes.append(Route("/", globals()[function_name], **route_options))
+                    routes.append(Route("/", locals()[function_name], **route_options))
                 else:
                     routes.append(
                         Route(
                             f"/{path.relative_to(routes_path).with_suffix('')}/",
-                            globals()[function_name],
+                            locals()[function_name],
                             **route_options,
                         )
                     )
